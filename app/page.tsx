@@ -1,22 +1,37 @@
 import { connectDB } from "@/util/database"
 import Link from "next/link"
+import Nextauth from "@/pages/api/auth/[...nextauth]"
+import { getServerSession } from 'next-auth'
 
+import LoginBtn from "./component/loginBtn"
 
 import MainHome from "./home/page"
 import Search from "./search/page"
 import Action from "./action/page"
 import UserPage from "./[userid]/page"
 import Register from "./register/page"
+import { Sign } from "crypto"
 
 export default async function Home() {
-  let db = (await connectDB).db('thread')
-  // await db.collection('users').deleteMany({ test: 'test' })
+  // let db = (await connectDB).db('thread')
+  // // await db.collection('users').deleteMany({ test: 'test' })
+  let session = await getServerSession(Nextauth)
+  if (session) {
+    console.log(session)
+  }
 
   return (
-    <main className="">
-      <div>
-        <Link href={'/register'}>회원가입</Link>
-      </div>
-    </main >
+    <main className="w-full h-full">
+      {
+        session ? <div>메인</div>
+          : <>
+            <div className="h-3/4"></div>
+            <div className="w-60 text-center container mx-auto">
+              <LoginBtn></LoginBtn>
+              <Link href={'/register'}><div className="border-black border-1 rounded-md my-2 py-2">회원가입</div></Link>
+            </div>
+          </>
+      }
+    </main>
   )
 }

@@ -1,12 +1,20 @@
+import Nextauth from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+
 import Navbar from "../component/navbar";
 
-export default function Search() {
+import { notFound } from "next/navigation"
+
+export default async function Search() {
+    let session = await getServerSession()
     return (
-        <>
-            <div>
-                search
-            </div>
-            <Navbar></Navbar>
-        </>
+        session
+            ? <>
+                <div>
+                    search
+                </div>
+                <Navbar></Navbar>
+            </>
+            : notFound()
     )
 }

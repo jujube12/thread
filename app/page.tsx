@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth'
 import LoginBtn from "./component/loginBtn"
 import LogoutBtn from "./component/logoutBtn"
 
-import MainHome from "./home/page"
+import Main from "./component/main"
 import Search from "./search/page"
 import Action from "./action/page"
 import UserPage from "./[userid]/page"
@@ -25,8 +25,8 @@ export default async function Home() {
       {
         session
           ? <>
-            <div>main</div>
-            <LogoutBtn></LogoutBtn>
+            <Main></Main>
+            {/* <LogoutBtn></LogoutBtn> */}
           </>
           : <>
             <div className="h-3/4"></div>

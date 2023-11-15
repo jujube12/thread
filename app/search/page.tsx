@@ -1,7 +1,12 @@
+import Navbar from "../component/navbar";
+
 export default function Search() {
     return (
-        <div>
-            search
-        </div>
+        <>
+            <div>
+                search
+            </div>
+            <Navbar></Navbar>
+        </>
     )
 }

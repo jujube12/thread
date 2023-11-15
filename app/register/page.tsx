@@ -5,12 +5,14 @@ import { useEffect, useState } from "react"
 export default function Register() {
     let [email, setEmail] = useState('')
     let [show, setShow] = useState('invisible')
+    let [btnShow, setBtnShow] = useState(true)
 
     useEffect(() => {
         fetch('/api/register/checkEmail', { method: 'POST', body: email })
             .then(r => r.json())
             .then((r) => {
-                setShow(r)
+                setShow(r.noti)
+                setBtnShow(r.btn)
             })
     }, [email])
 
@@ -26,7 +28,7 @@ export default function Register() {
                     <div className={`absolute bottom-1 left-60 ml-1 bg-red-100 text-red-500 px-3 py-1 rounded-lg ${show}`}>!</div>
                 </div>
                 <input name='password' type="password" placeholder="password" className="border-1 border-black block w-full my-1 p-2 rounded-md"></input>
-                <button type="submit" className="border-1 border-black block w-full my-1 p-2 rounded-md">가입</button>
+                <button type="submit" className="border-1 border-black block w-full my-1 p-2 rounded-md disabled" disabled={btnShow}>가입</button>
             </form>
         </div>
     )

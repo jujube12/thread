@@ -5,7 +5,7 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (req.method === 'POST') {
             if (req.body.length == 0) {
-                res.status(200).json('invisible')
+                res.status(200).json({ noti: 'invisible', btn: true })
             } else {
                 // 이메일 형식 체크
                 let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
@@ -14,12 +14,12 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
                     let db = (await connectDB).db('thread')
                     let result = await db.collection('users').findOne({ email: req.body })
                     if (result) {
-                        res.status(200).json('visible')
+                        res.status(200).json({ noti: 'visible', btn: true })
                     } else {
-                        res.status(200).json('invisible')
+                        res.status(200).json({ noti: 'invisible', btn: false })
                     }
                 } else {
-                    res.status(200).json('visible')
+                    res.status(200).json({ noti: 'visible', btn: true })
                 }
             }
         }

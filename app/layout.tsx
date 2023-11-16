@@ -13,7 +13,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-screen h-screen">
+      <body className="w-screen h-screen overflow-hidden">
         {children}
       </body>
     </html>

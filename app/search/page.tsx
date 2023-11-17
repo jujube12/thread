@@ -10,10 +10,10 @@ export default async function Search() {
     return (
         session
             ? <>
+                <Navbar></Navbar>
                 <div>
                     search
                 </div>
-                <Navbar></Navbar>
             </>
             : notFound()
     )

@@ -10,10 +10,10 @@ export default async function Action() {
     return (
         session
             ? <>
+                <Navbar></Navbar>
                 <div>
                     action
                 </div>
-                <Navbar></Navbar>
             </>
             : notFound()
     )

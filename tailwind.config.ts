@@ -33,7 +33,7 @@ const config: Config = {
       },
       keyframes: {
         pageUp: {
-          "100%": { transform: 'translateY(1rem)' }
+          "100%": { transform: 'translateY(3rem)' }
         }
       },
       animation: {

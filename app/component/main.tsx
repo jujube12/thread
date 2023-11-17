@@ -13,9 +13,9 @@ export default async function Main() {
             <div className="h-full overflow-y-scroll">
                 <div className="mb-16">
                     {
-                        result.map((a) => {
+                        result.map((a, i) => {
                             return (
-                                <SentenceBox sentence={JSON.stringify(a)}></SentenceBox>
+                                <SentenceBox key={i} sentence={JSON.stringify(a)}></SentenceBox>
                             )
                         })
                     }

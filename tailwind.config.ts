@@ -20,6 +20,8 @@ const config: Config = {
         1: '1px'
       },
       spacing: {
+        '37': '9.25rem',
+        '38': '9.5rem',
         '128': '32rem',
         '144': '36rem',
         '160': '40rem',

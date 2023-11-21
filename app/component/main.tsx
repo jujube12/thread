@@ -5,7 +5,7 @@ import SentenceBox from "./sentenceBox";
 
 export default async function Main() {
     let db = (await connectDB).db('thread')
-    let result = await db.collection('sentence').find().toArray();
+    let result = await db.collection('sentence').find().sort({_id: -1}).toArray();
 
     return (
         <>

@@ -21,7 +21,7 @@ export default function ReactionBox(props: sentence) {
                 }}>저장</span> {sentenceInfo.save > 0 ? 1 : <></>}</div>
                 <div className="pr-5"><span className="cursor-pointer" onClick={() => {
                     setShowWritePage(true)
-                }}>댓글</span> {sentenceInfo.comment ? 1 : <></>}</div>
+                }}>댓글</span> {sentenceInfo.comment ? sentenceInfo.comment : <></>}</div>
             </div>
             <div className={`absolute w-full h-full border-1 bg-white border-gray-600 rounded-t-lg translate-y-160 ${showWritePage && "animate-commentPageUp"}`}>
                 <div className="w-full border-b-1 border-gray-600 flex">

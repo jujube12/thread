@@ -8,7 +8,7 @@ export default function BackButton() {
     return (
         <div className="w-full flex justify-between">
             <div className="p-2 cursor-pointer w-16" onClick={() => {
-                router.back()
+                router.push('/')
             }}>뒤로</div>
             <div className="font-bold p-2 w-16">thread</div>
             <div className="w-16 p-2"> </div>

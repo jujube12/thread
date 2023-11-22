@@ -38,11 +38,15 @@ const config: Config = {
       },
       keyframes: {
         pageUp: {
-          "100%": { transform: 'translateY(3rem)' }
+          "100%": { transform: 'translateY(1rem)' }
+        },
+        commentPageUp: {
+          "100%": { transform: 'translateY(-9rem)' }
         }
       },
       animation: {
-        pageUp: 'pageUp 500ms forwards'
+        pageUp: 'pageUp 500ms forwards',
+        commentPageUp: 'commentPageUp 500ms forwards'
       }
     },
   },

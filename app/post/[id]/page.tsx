@@ -26,14 +26,14 @@ export default async function Post(props: param) {
             ?
             <>
                 <Navbar></Navbar>
-                <div className="h-full w-full">
+                <div className="h-full w-full relative">
                     <BackButton></BackButton>
-                    <div className="p-3">
-                        <div className="flex">
+                    <div className="">
+                        <div className="flex px-3 pt-3">
                             <div className="bg-gray-400 h-9 w-9 rounded-full"></div>
                             <div className="w-85% m-auto font-bold">{result?.userName}</div>
                         </div>
-                        <div className="flex mt-3 cursor-pointer">
+                        <div className="flex mt-3 px-3 cursor-pointer">
                             <div className="w-full">{result?.sentence}</div>
                         </div>
                         <ReactionBox likes={result?.likes}></ReactionBox>

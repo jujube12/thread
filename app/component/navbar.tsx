@@ -18,7 +18,7 @@ export default function Navbar() {
                 <Link href={'/action'}><div className="cursor-pointer text-gray-500 p-5">4</div></Link>
                 <Link href={'/'}><div className="cursor-pointer text-gray-500 p-5">5</div></Link>
             </div>
-            <div className={`transition absolute w-full h-full border-1 bg-white border-gray-600 rounded-t-lg translate-y-240 ${showWritePage && "animate-pageUp"}`}>
+            <div className={`absolute w-full h-full border-1 bg-white border-gray-600 rounded-t-lg translate-y-240 ${showWritePage && "animate-pageUp"}`}>
                 <div className="w-full border-b-1 border-gray-600 flex">
                     <div className="p-2 cursor-pointer" onClick={() => {
                         setShowWritePage(false)

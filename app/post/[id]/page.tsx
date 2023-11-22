@@ -15,11 +15,14 @@ type param = {
     },
     searchParams: {}
 }
+import { sentenceInfo } from "@/app/component/sentenceBox"
+
 
 export default async function Post(props: param) {
     let db = (await connectDB).db('thread')
     let result = await db.collection('sentence').findOne({ _id: new ObjectId(props.params.id) })
     let session = await getServerSession(Nextauth)
+    let sentenceInfo: sentenceInfo = JSON.parse(JSON.stringify(result))
 
     return (
         session
@@ -31,12 +34,12 @@ export default async function Post(props: param) {
                     <div className="">
                         <div className="flex px-3 pt-3">
                             <div className="bg-gray-400 h-9 w-9 rounded-full"></div>
-                            <div className="w-85% m-auto font-bold">{result?.userName}</div>
+                            <div className="w-85% m-auto font-bold">{sentenceInfo.userName}</div>
                         </div>
                         <div className="flex mt-3 px-3 cursor-pointer">
-                            <div className="w-full">{result?.sentence}</div>
+                            <div className="w-full">{sentenceInfo.sentence}</div>
                         </div>
-                        <ReactionBox likes={result?.likes}></ReactionBox>
+                        <ReactionBox sentence={JSON.stringify(sentenceInfo)}></ReactionBox>
                     </div>
                 </div>
             </>

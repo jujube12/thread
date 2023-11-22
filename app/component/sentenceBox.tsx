@@ -2,16 +2,19 @@
 
 import { ObjectId } from "mongodb"
 import { useRouter } from "next/navigation"
-type sentence = {
+
+export type sentence = {
     sentence: string
 }
 
-type sentenceInfo = {
+export type sentenceInfo = {
     _id: ObjectId,
     sentence: string,
     userEmail: string,
     userName: string,
     likes: number,
+    save: number,
+    comment: number,
     date: string,
     time: string
 }

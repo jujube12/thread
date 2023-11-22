@@ -1,8 +1,13 @@
 'use client'
 
+import { ObjectId } from "mongodb"
 import { useState } from "react"
 
-export default function WriteComment() {
+type sentenceID = {
+    sentenceID: string
+}
+
+export default function WriteComment(props: sentenceID) {
     let [textLength, setTextLength] = useState(0)
     return (
         <div className="relative">
@@ -11,11 +16,12 @@ export default function WriteComment() {
                     <textarea name='sentence' className="w-full h-full resize-none focus:outline-none" placeholder="글을 입력하세요" maxLength={200} onChange={(e) => {
                         setTextLength(e.target.value.length)
                     }}></textarea>
+                    <input className="hidden" name='sentenceID' value={JSON.parse(props.sentenceID)}></input>
                 </div>
                 <div>
                     {
                         textLength > 0
-                            ? <button type='submit' className="absolute right-0 bottom-65 pr-2">제출</button>
+                            ? <button type='submit' className="absolute right-0 top-2 pr-2">제출</button>
                             : <></>
                     }
                 </div>

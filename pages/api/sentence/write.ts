@@ -13,6 +13,8 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
                 req.body.userEmail = user.user.email
                 req.body.userName = user.user.name
                 req.body.likes = 0
+                req.body.save = 0
+                req.body.comment = 0
 
                 let today = new Date();
                 req.body.date = today.getFullYear() + ('0' + today.getMonth() + 1).slice(-2) + ('0' + today.getDate()).slice(-2)

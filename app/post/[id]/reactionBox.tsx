@@ -1,21 +1,35 @@
 'use client'
 
 import WriteComment from "./writeComment"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from 'next/navigation'
 
 import { sentence } from "@/app/component/sentenceBox"
 import { sentenceInfo } from "@/app/component/sentenceBox"
 
 export default function ReactionBox(props: sentence) {
+    let router = useRouter()
+
     let [showWritePage, setShowWritePage] = useState(false)
     let sentenceInfo: sentenceInfo = JSON.parse(props.sentence)
+    let [likeBtn, setLikeBtn] = useState(false)
+
+    useEffect(() => {
+        if (likeBtn) {
+            fetch('/api/reaction/like', { method: 'POST', body: JSON.stringify({ id: sentenceInfo._id }) }).then((r) => r.json())
+                .then((result) => {
+                    setLikeBtn(false)
+                    router.refresh()
+                })
+        } else { }
+    }, [likeBtn])
 
     return (
         <>
-            <div className="flex p-3 text-xs text-gray-500">
-                <div className="pr-5"><span className="cursor-pointer" onClick={() => {
-
-                }}>좋아요</span> {sentenceInfo.likes > 0 ? 1 : <></>}</div>
+            <div className='flex p-3 text-xs text-gray-500'>
+                <div className="pr-5"><span className={`cursor-pointer`} onClick={() => {
+                    setLikeBtn(true)
+                }}>좋아요</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
                 <div className="pr-5"><span className="cursor-pointer" onClick={() => {
 
                 }}>저장</span> {sentenceInfo.save > 0 ? 1 : <></>}</div>

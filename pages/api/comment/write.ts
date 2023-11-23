@@ -26,7 +26,6 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
                 await db.collection('comment').insertOne(req.body)
 
                 let result = await db.collection('comment').count({ sentenceID: req.body.sentenceID })
-                console.log(req.body.sentenceID, result)
                 await db.collection('sentence').updateOne({ _id: new ObjectId(req.body.sentenceID) }, { $set: { comment: result } })
             }
 

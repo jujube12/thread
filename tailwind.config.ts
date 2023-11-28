@@ -41,7 +41,7 @@ const config: Config = {
           "100%": { transform: 'translateY(1rem)' }
         },
         commentPageUp: {
-          "100%": { transform: 'translateY(-9rem)' }
+          "100%": { top: '1rem' }
         }
       },
       animation: {

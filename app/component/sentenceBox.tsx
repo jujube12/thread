@@ -2,6 +2,7 @@
 
 import { ObjectId } from "mongodb"
 import { useRouter } from "next/navigation"
+import ReactionBox from "../post/[id]/reactionBox"
 
 export type sentence = {
     sentence: string
@@ -35,17 +36,7 @@ export default function SentenceBox(props: sentence) {
                 <div className="w-1 mx-4 bg-gray-300"></div>
                 <div className="w-85% m-auto">{sentenceInfo.sentence}</div>
             </div>
-            <div className="flex pt-5 text-xs text-gray-500">
-                <div className="pl-5"><span className="cursor-pointer" onClick={() => {
-
-                }}>좋아요</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
-                <div className="pl-5"><span className="cursor-pointer" onClick={() => {
-
-                }}>저장</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
-                <div className="pl-5"><span className="cursor-pointer" onClick={() => {
-
-                }}>댓글</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
-            </div>
+            <ReactionBox sentence={JSON.stringify(sentenceInfo)}></ReactionBox>
         </div>
     )
 }

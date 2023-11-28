@@ -55,7 +55,7 @@ export default function ReactionBox(props: sentence) {
                     setShowWritePage(true)
                 }}>댓글</span> {sentenceInfo.comment ? sentenceInfo.comment : <></>}</div>
             </div>
-            <div className={`absolute w-full h-full border-1 bg-white border-gray-600 rounded-t-lg translate-y-160 ${showWritePage && "animate-commentPageUp"}`}>
+            <div className={`absolute w-full h-full border-1 bg-white border-gray-600 rounded-t-lg top-176 left-0 ${showWritePage && "animate-commentPageUp"}`}>
                 <div className="w-full border-b-1 border-gray-600 flex">
                     <div className="p-2 cursor-pointer" onClick={() => {
                         setShowWritePage(false)

@@ -14,12 +14,30 @@ export default function ReactionBox(props: sentence) {
     let sentenceInfo: sentenceInfo = JSON.parse(props.sentence)
     let [likeBtn, setLikeBtn] = useState(false)
 
+    let [textColor, setTextColor] = useState('text-gray-500')
+
+    useEffect(() => {
+        fetch('/api/reaction/isLiked', { method: 'POST', body: JSON.stringify({ id: sentenceInfo._id }) }).then((r) => r.json())
+            .then((result) => {
+                if (result.isLiked) {
+                    setTextColor('text-red-500')
+                }
+            })
+    }, [])
+
     useEffect(() => {
         if (likeBtn) {
             fetch('/api/reaction/like', { method: 'POST', body: JSON.stringify({ id: sentenceInfo._id }) }).then((r) => r.json())
                 .then((result) => {
-                    setLikeBtn(false)
-                    router.refresh()
+                    if (result.isLiked) {
+                        setTextColor('text-red-500')
+                        setLikeBtn(false)
+                        router.refresh()
+                    } else {
+                        setTextColor('text-gray-500')
+                        setLikeBtn(false)
+                        router.refresh()
+                    }
                 })
         } else { }
     }, [likeBtn])
@@ -27,13 +45,13 @@ export default function ReactionBox(props: sentence) {
     return (
         <>
             <div className='flex p-3 text-xs text-gray-500'>
-                <div className="pr-5"><span className={`cursor-pointer`} onClick={() => {
+                <div className={`cursor-pointer pr-5 ${textColor}`}><span onClick={() => {
                     setLikeBtn(true)
                 }}>좋아요</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
-                <div className="pr-5"><span className="cursor-pointer" onClick={() => {
+                <div className="cursor-pointer pr-5"><span onClick={() => {
 
                 }}>저장</span> {sentenceInfo.save > 0 ? 1 : <></>}</div>
-                <div className="pr-5"><span className="cursor-pointer" onClick={() => {
+                <div className="cursor-pointer pr-5"><span onClick={() => {
                     setShowWritePage(true)
                 }}>댓글</span> {sentenceInfo.comment ? sentenceInfo.comment : <></>}</div>
             </div>

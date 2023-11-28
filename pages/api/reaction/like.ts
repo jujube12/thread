@@ -19,14 +19,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 // ts로 findone projection 적용하는 방법
                 const query = { _id: new ObjectId(sentenceID) };
                 const options = {
-                    projection: { likes: 1 },
+                    projection: { likes: 1, likeList: 1 },
                 };
                 result = await db.collection('sentence').findOne(query, options);
             }
-            let likes = result?.likes + 1
-            await db.collection('sentence').updateOne({ _id: new ObjectId(sentenceID) }, { $set: { likes: likes } })
+            let isLiked
+            let likes
+            let likeList
 
-            res.status(200).json('')
+            if (result?.likeList != null) {
+                isLiked = result?.likeList.indexOf(user.user.email)
+                if (isLiked > -1) {
+                    likeList = [...result?.likeList]
+                    likes = result?.likes - 1
+                    likeList.splice(isLiked, 1)
+                    await db.collection('sentence').updateOne({ _id: new ObjectId(sentenceID) }, { $set: { likes: likes, likeList: likeList } })
+                    res.status(200).json({ isLiked: false })
+                } else {
+                    likeList = [...result?.likeList]
+                    likes = result?.likes + 1
+                    likeList.push(user.user.email)
+                    await db.collection('sentence').updateOne({ _id: new ObjectId(sentenceID) }, { $set: { likes: likes, likeList: likeList } })
+                    res.status(200).json({ isLiked: true })
+                }
+            } else {
+                likeList = []
+                likeList.push(user.user.email)
+                likes = result?.likes + 1
+                await db.collection('sentence').updateOne({ _id: new ObjectId(sentenceID) }, { $set: { likes: likes, likeList: likeList } })
+                res.status(200).json({ isLiked: true })
+            }
         }
     } catch (err) {
 

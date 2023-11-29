@@ -48,9 +48,9 @@ export default function ReactionBox(props: sentence) {
                 <div className={`cursor-pointer pr-5 ${textColor}`}><span onClick={() => {
                     setLikeBtn(true)
                 }}>좋아요</span> {sentenceInfo.likes > 0 ? sentenceInfo.likes : <></>}</div>
-                <div className="cursor-pointer pr-5"><span onClick={() => {
+                {/* <div className="cursor-pointer pr-5"><span onClick={() => {
 
-                }}>저장</span> {sentenceInfo.save > 0 ? 1 : <></>}</div>
+                }}>저장</span> {sentenceInfo.save > 0 ? 1 : <></>}</div> */}
                 <div className="cursor-pointer pr-5"><span onClick={() => {
                     setShowWritePage(true)
                 }}>댓글</span> {sentenceInfo.comment ? sentenceInfo.comment : <></>}</div>

@@ -11,7 +11,6 @@ export type user = {
 export type userInfo = {
     name: string,
     email: string
-
 }
 
 export default function Navbar(props: user) {

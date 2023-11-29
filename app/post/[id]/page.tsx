@@ -30,7 +30,7 @@ export default async function Post(props: param) {
         session
             ?
             <>
-                <Navbar></Navbar>
+                <Navbar user={JSON.stringify(session)}></Navbar>
                 <div className="h-full w-full overflow-y-scroll">
                     <BackButton></BackButton>
                     <div className="border-b-1 bg-white">

@@ -4,7 +4,18 @@ import { useState } from "react"
 
 import WriteSentence from "./writeSentence"
 
-export default function Navbar() {
+export type user = {
+    user: string
+}
+
+export type userInfo = {
+    name: string,
+    email: string
+
+}
+
+export default function Navbar(props: user) {
+    let userInfo: userInfo = JSON.parse(props.user).user
     let [showWritePage, setShowWritePage] = useState(false)
 
     return (
@@ -16,7 +27,7 @@ export default function Navbar() {
                     setShowWritePage(true)
                 }}>3</div>
                 <Link href={'/action'}><div className="cursor-pointer text-gray-500 p-5">4</div></Link>
-                <Link href={'/'}><div className="cursor-pointer text-gray-500 p-5">5</div></Link>
+                <Link href={`/mypage/${userInfo.email}`}><div className="cursor-pointer text-gray-500 p-5">5</div></Link>
             </div>
             <div className={`absolute w-full h-full border-1 bg-white border-gray-600 z-10 rounded-t-lg translate-y-240 ${showWritePage && "animate-pageUp"}`}>
                 <div className="w-full border-b-1 border-gray-600 flex">

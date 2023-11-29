@@ -10,7 +10,7 @@ export default async function Action() {
     return (
         session
             ? <>
-                <Navbar></Navbar>
+                <Navbar user={JSON.stringify(session)}></Navbar>
                 <div>
                     action
                 </div>

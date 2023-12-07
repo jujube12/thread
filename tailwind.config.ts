@@ -42,11 +42,15 @@ const config: Config = {
         },
         commentPageUp: {
           "100%": { top: '1rem' }
+        },
+        editProfilePageUp: {
+          "100%": { top: '1rem' }
         }
       },
       animation: {
         pageUp: 'pageUp 500ms forwards',
-        commentPageUp: 'commentPageUp 500ms forwards'
+        commentPageUp: 'commentPageUp 500ms forwards',
+        editProfilePageUp: 'editProfilePageUp 500ms forwards'
       }
     },
   },

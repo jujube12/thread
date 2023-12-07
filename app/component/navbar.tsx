@@ -10,7 +10,8 @@ export type user = {
 
 export type userInfo = {
     name: string,
-    email: string
+    email: string,
+    intro: string
 }
 
 export default function Navbar(props: user) {

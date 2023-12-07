@@ -21,7 +21,7 @@ export default function Register() {
             <div className="h-1/2"></div>
             <form action={'/api/register/post'} method="POST" className="w-60 container mx-auto mt-5">
                 <div className="relative">
-                    <input name='name' type="text" placeholder="name" className="border-1 border-black block w-full my-1 p-2 rounded-md" onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                    <input name='name' type="text" placeholder="name" className="border-1 border-black block w-full my-1 p-2 rounded-md" onChange={(e: React.FormEvent<HTMLInputElement>) => { //원래 이거 타입 안지정해주면 에러났었는데 다시 해보니까 안남
                         let copy = { ...input }
                         copy.name = e.currentTarget.value
                         setInput(copy)

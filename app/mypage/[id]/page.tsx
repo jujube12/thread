@@ -9,7 +9,7 @@ import MySenteceBox from "./mySentenceBox";
 import { notFound } from "next/navigation";
 import SignPage from "@/app/component/signPage";
 import LogoutBtn from "@/app/component/logoutBtn";
-import EditProfileBtn from "../editProflieBtn";
+import EditProfileBtn from "./editProflieBtn";
 
 export default async function UserPage() {
     let session = await getServerSession(Nextauth)
@@ -38,7 +38,7 @@ export default async function UserPage() {
                         </div>
                     </div>
                     <div className="flex justify-around text-center mt-7 mb-10">
-                        <EditProfileBtn></EditProfileBtn>
+                        <EditProfileBtn user={JSON.stringify(session)}></EditProfileBtn>
                         <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">프로필 공유</div>
                     </div>
                     <MySenteceBox sentence={JSON.stringify(userSentence)}></MySenteceBox>

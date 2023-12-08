@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react"
 import { user, userInfo } from "@/app/component/navbar"
-
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function EditProfileBtn(props: user) {
+    let router = useRouter()
+
     let userInfo: userInfo = JSON.parse(props.user).user
 
     let [showEditProfilePage, setShowEditProfilePage] = useState(false)
@@ -17,14 +20,18 @@ export default function EditProfileBtn(props: user) {
         setUserIntro(userInfo.intro)
     }
 
+    const { update } = useSession()
+
     useEffect(() => {
         if (save) {
             fetch('/api/profile/edit', { method: 'POST', body: JSON.stringify({ name: userName, intro: userIntro }) }).then(() => {
                 setSave(false)
                 setShowEditProfilePage(false)
+                update({ name: userName })
                 window.location.href = `/mypage/${userInfo.email}`
             })
         }
+        router.refresh()
     }, [save])
 
     return (

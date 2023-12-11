@@ -41,7 +41,7 @@ export default NextAuth({
             if (user) {
                 token.user = { ...user };
             }
-            if (trigger === 'update' && session.name) { // session 업데이트 (닉네임 수정)
+            if (trigger === 'update' && session.name) {
                 token.name = session.name
             }
 
@@ -50,7 +50,6 @@ export default NextAuth({
         session: async ({ session, token }: { session: any, token: any }) => {
             session.user.name = token.name;
             session.user.email = token.email;
-
             return session;
         },
     },

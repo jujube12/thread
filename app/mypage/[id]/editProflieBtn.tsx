@@ -24,12 +24,15 @@ export default function EditProfileBtn(props: user) {
 
     useEffect(() => {
         if (save) {
-            fetch('/api/profile/edit', { method: 'POST', body: JSON.stringify({ name: userName, intro: userIntro }) }).then(() => {
-                setSave(false)
-                setShowEditProfilePage(false)
-                update({ name: userName })
-                window.location.href = `/mypage/${userInfo.email}`
-            })
+            fetch('/api/profile/edit', { method: 'POST', body: JSON.stringify({ name: userName, intro: userIntro }) }).then(r => r.json())
+                .then((result) => {
+                    if (result.changed) {
+                        update({ name: userName })
+                    }
+                    setSave(false)
+                    setShowEditProfilePage(false)
+                    window.location.href = `/mypage/${userInfo.email}`
+                })
         }
         router.refresh()
     }, [save])

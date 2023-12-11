@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react"
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode

@@ -1,11 +1,14 @@
 'use client'
 
 import { sentence, sentenceInfo } from "@/app/component/sentenceBox"
+import { mySenAndCom, senAndComInfo } from "@/app/mypage/[id]/page"
 import SentenceBox from "@/app/component/sentenceBox"
 import { useState } from "react"
+import CommentBox from "./commentBox"
 
-export default function MySenteceBox(props: sentence) {
+export default function MySenteceBox(props: mySenAndCom) {
     let sentenceInfo: sentenceInfo[] = JSON.parse(props.sentence)
+
     let [show, setShow] = useState(true)
     return (
         <>
@@ -30,7 +33,9 @@ export default function MySenteceBox(props: sentence) {
                                 : <div>아직 작성한 글이 없습니다.</div>
                         }
                     </div>
-                    : <div>아직 작성한 댓글이 없습니다.</div>
+                    : <div className="mb-16">
+                        <CommentBox comment={props.comment}></CommentBox>
+                    </div>
             }
         </>
     )

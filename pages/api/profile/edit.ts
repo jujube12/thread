@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } else {
                 let db = (await connectDB).db('thread')
                 await db.collection('users').updateOne({ email: user.user.email }, { $set: data })
-                await db.collection('sentence').updateOne({ userEmail: user.user.email }, { $set: name })
+                await db.collection('sentence').updateMany({ userEmail: user.user.email }, { $set: name })
                 res.status(200).json({ changed: true })
             }
         }

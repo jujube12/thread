@@ -9,8 +9,8 @@ export default function CommentBox(props: comment) {
                 commentInfo.length > 0
                     ? commentInfo.map((a, i) => {
                         return (
-                            <div>
-                                <SentenceBox key={i} sentence={JSON.stringify(a.sentence)}></SentenceBox>
+                            <div key={i}>
+                                <SentenceBox sentence={JSON.stringify(a.sentence)}></SentenceBox>
                                 <div className="p-3">
                                     <div className="flex">
                                         <div className="bg-gray-400 h-9 w-9 rounded-full"></div>

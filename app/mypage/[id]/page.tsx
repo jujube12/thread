@@ -128,8 +128,13 @@ export default async function UserPage(props: url) {
                             </div>
                         </div>
                         <div className="flex justify-around text-center mt-7 mb-10">
-                            <FollowBtn isFollowed={isFollowed} user={userInfo?.email} ouser={users?.email}></FollowBtn>
-                            <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">언급</div>
+                            {session ?
+                                <>
+                                    <FollowBtn isFollowed={isFollowed} user={userInfo?.email} ouser={users?.email}></FollowBtn>
+                                    <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">언급</div>
+                                </>
+                                : <></>
+                            }
                         </div>
                         <MySenteceBox sentence={JSON.stringify(usersSentence)} comment={JSON.stringify(osenAndCom)} ></MySenteceBox>
                     </div>

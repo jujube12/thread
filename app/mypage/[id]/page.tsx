@@ -67,6 +67,19 @@ export default async function UserPage(props: url) {
         senAndCom.push({ sentence: data, comment: a });
     }))
 
+    // 팔로우, 팔로잉 목록
+    let fq = { email: props.params.id.replace(/%40/, '@') }
+    let fo = { projection: { following: 1, follower: 1 } }
+    let user = await db.collection('users').findOne(fq, fo);
+    let userFollowing: string[] = []
+    let userFollower: string[] = []
+    console.log(user)
+    if (userFollower == undefined || userFollowing == undefined) {
+    } else {
+        userFollowing = user?.following
+        userFollower = user?.follower
+    }
+
     // 다른 유저페이지에서 보여줄 다른 유저가 작성한 글과 댓글
     const query = { email: props.params.id.replace(/%40/, '@') }
     const option = { projection: { name: 1, email: 1, intro: 1, follower: 1 } }
@@ -79,7 +92,6 @@ export default async function UserPage(props: url) {
         let data = await db.collection('sentence').findOne({ _id: new ObjectId(a.sentenceID) })
         osenAndCom.push({ sentence: data, comment: a });
     }))
-
     // 유저 팔로우 여부
     let isFollowed = false
     if (users?.follower) {
@@ -93,53 +105,60 @@ export default async function UserPage(props: url) {
     }
 
     return (
-        userInfo?.email === props.params.id.replace(/%40/, '@')
-            ? <>{/* 유저 본인 페이지 */}
-                <Navbar user={JSON.stringify(session)}></Navbar>
-                <div className="h-full overflow-y-scroll">
-                    <div className="flex m-5">
-                        <div className="flex-1">
-                            <div className="text-2xl font-bold">{userInfo?.name}</div>
-                            <div>{userInfo?.email}</div>
-                            <LogoutBtn></LogoutBtn>
-                        </div>
-                        <div>
-                            <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
-                        </div>
-                    </div>
-                    <div className="flex justify-around text-center mt-7 mb-10">
-                        <EditProfileBtn user={JSON.stringify(session)}></EditProfileBtn>
-                        <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">프로필 공유</div>
-                    </div>
-                    <MySenteceBox sentence={JSON.stringify(userSentence)} comment={JSON.stringify(senAndCom)} ></MySenteceBox>
-                </div>
-            </>
-            : users ?
-                <>{/** 타유저 페이지 */}
+        session
+            ?
+            userInfo?.email === props.params.id.replace(/%40/, '@')
+                ? <>{/* 유저 본인 페이지 */}
                     <Navbar user={JSON.stringify(session)}></Navbar>
                     <div className="h-full overflow-y-scroll">
                         <div className="flex m-5">
                             <div className="flex-1">
-                                <div className="text-2xl font-bold">{users?.name}</div>
-                                <div>{users?.email}</div>
+                                <div className="text-2xl font-bold">{userInfo?.name}</div>
+                                <div>{userInfo?.email}</div>
+                                <LogoutBtn></LogoutBtn>
                             </div>
                             <div>
                                 <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
                             </div>
                         </div>
-                        <div className="flex justify-around text-center mt-7 mb-10">
-                            {session ?
-                                <>
-                                    <FollowBtn isFollowed={isFollowed} user={userInfo?.email} ouser={users?.email}></FollowBtn>
-                                    <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">언급</div>
-                                </>
-                                : <></>
-                            }
+                        <div className="flex m-5 text-sm w-32 justify-between">
+                            <div>팔로잉 {userFollowing.length}</div>
+                            <div>팔로워 {userFollower.length}</div>
                         </div>
-                        <MySenteceBox sentence={JSON.stringify(usersSentence)} comment={JSON.stringify(osenAndCom)} ></MySenteceBox>
+                        <div className="flex justify-around text-center mt-3 mb-10">
+                            <EditProfileBtn user={JSON.stringify(session)}></EditProfileBtn>
+                            <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">프로필 공유</div>
+                        </div>
+                        <MySenteceBox sentence={JSON.stringify(userSentence)} comment={JSON.stringify(senAndCom)} ></MySenteceBox>
                     </div>
                 </>
-                : // 유저가 없을 때
-                notFound()
+                : users ?
+                    <>{/** 타유저 페이지 */}
+                        <Navbar user={JSON.stringify(session)}></Navbar>
+                        <div className="h-full overflow-y-scroll">
+                            <div className="flex m-5">
+                                <div className="flex-1">
+                                    <div className="text-2xl font-bold">{users?.name}</div>
+                                    <div>{users?.email}</div>
+                                </div>
+                                <div>
+                                    <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div className="flex m-5 text-sm w-32 justify-between">
+                                <div>팔로잉 {userFollowing.length}</div>
+                                <div>팔로워 {userFollower.length}</div>
+                            </div>
+                            <div className="flex justify-around text-center mt-7 mb-10">
+                                <FollowBtn isFollowed={isFollowed} user={userInfo?.email} ouser={users?.email}></FollowBtn>
+                                <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">언급</div>
+                            </div>
+                            <MySenteceBox sentence={JSON.stringify(usersSentence)} comment={JSON.stringify(osenAndCom)} ></MySenteceBox>
+                        </div>
+                    </>
+                    : // 유저가 없을 때
+                    notFound()
+            : notFound()
+
     )
 }

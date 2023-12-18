@@ -44,8 +44,8 @@ export type followBtnProp = {
     ouser: string
 }
 export type followList = {
-    follower: string[],
-    following: string[],
+    follower: { _id: string, name: string, intro: string }[],
+    following: { _id: string, name: string, intro: string }[],
 }
 
 export default async function UserPage(props: url) {
@@ -60,6 +60,8 @@ export default async function UserPage(props: url) {
     let isFollowed = false // 로그인한 유저가 해당 페이지 유저를 팔로우했는지 여부
     let followingList: string[] = [] // 유저 팔로잉 리스트
     let followerList: string[] = [] // 유저 팔로워 리스트
+    let followingInfo: { _id: string, name: string, intro: string }[] = [] // 유저 팔로잉 리스트 정보
+    let followerInfo: { _id: string, name: string, intro: string }[] = []  // 유저 팔로워 리스트 정보
     let db = (await connectDB).db('thread')
 
     if (userInfo?.email === props.params.id.replace(/%40/, '@')) { // 현재 페이지가 사용자 본인의 페이지일 때
@@ -83,6 +85,18 @@ export default async function UserPage(props: url) {
         } else {
             followingList = [...user?.following]
         }
+        await Promise.all(followerList.map(async (a: any) => {
+            let q = { email: a }
+            let o = { projection: { name: 1, intro: 1 } }
+            let data = await db.collection('users').findOne(q, o)
+            followerInfo.push({ _id: JSON.stringify(data?._id), name: data?.name, intro: data?.intro });
+        }))
+        await Promise.all(followingList.map(async (a: any) => {
+            let q = { email: a }
+            let o = { projection: { name: 1, intro: 1 } }
+            let data = await db.collection('users').findOne(q, o)
+            followingInfo.push({ _id: JSON.stringify(data?._id), name: data?.name, intro: data?.intro });
+        }))
     } else { // 현재 페이지가 다른 사용자의 페이지일 때
         const query = { email: props.params.id.replace(/%40/, '@') }
         const option = { projection: { name: 1, email: 1, intro: 1, follower: 1 } }
@@ -115,7 +129,20 @@ export default async function UserPage(props: url) {
         } else {
             followingList = [...user?.following]
         }
+        await Promise.all(followerList.map(async (a: any) => {
+            let q = { email: a }
+            let o = { projection: { name: 1, intro: 1 } }
+            let data = await db.collection('users').findOne(q, o)
+            followerInfo.push({ _id: JSON.stringify(data?._id), name: data?.name, intro: data?.intro });
+        }))
+        await Promise.all(followingList.map(async (a: any) => {
+            let q = { email: a }
+            let o = { projection: { name: 1, intro: 1 } }
+            let data = await db.collection('users').findOne(q, o)
+            followingInfo.push({ _id: JSON.stringify(data?._id), name: data?.name, intro: data?.intro });
+        }))
     }
+
     return (
         session
             ? userInfo?.email === props.params.id.replace(/%40/, '@')
@@ -132,7 +159,7 @@ export default async function UserPage(props: url) {
                                 <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
                             </div>
                         </div>
-                        <FollowingList follower={followerList} following={followingList}></FollowingList>
+                        <FollowingList follower={followerInfo} following={followingInfo}></FollowingList>
                         <div className="flex justify-around text-center mt-3 mb-10">
                             <EditProfileBtn user={JSON.stringify(session)}></EditProfileBtn>
                             <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">프로필 공유</div>
@@ -153,7 +180,7 @@ export default async function UserPage(props: url) {
                                     <div className="w-14 h-14 bg-gray-300 rounded-full"></div>
                                 </div>
                             </div>
-                            <FollowingList follower={followerList} following={followingList}></FollowingList>
+                            <FollowingList follower={followerInfo} following={followingInfo}></FollowingList>
                             <div className="flex justify-around text-center mt-7 mb-10">
                                 <FollowBtn isFollowed={isFollowed} user={userInfo?.email} ouser={OuserInfo?.email}></FollowBtn>
                                 <div className="border-1 w-2/5 border-gray-500 rounded-lg px-6 py-1 cursor-pointer">언급</div>

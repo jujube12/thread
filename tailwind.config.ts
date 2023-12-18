@@ -45,12 +45,16 @@ const config: Config = {
         },
         editProfilePageUp: {
           "100%": { top: '1rem' }
+        },
+        followPageUp: {
+          "100%": { top: '1rem' }
         }
       },
       animation: {
         pageUp: 'pageUp 500ms forwards',
         commentPageUp: 'commentPageUp 500ms forwards',
-        editProfilePageUp: 'editProfilePageUp 500ms forwards'
+        editProfilePageUp: 'editProfilePageUp 500ms forwards',
+        followPageUp: 'followPageUp 500ms forwards'
       }
     },
   },

@@ -6,10 +6,20 @@ import Nextauth from "@/pages/api/auth/[...nextauth]";
 import SentenceBox from "./sentenceBox";
 
 export default async function Main() {
-    let db = (await connectDB).db('thread')
-    let result = await db.collection('sentence').find().sort({ _id: -1 }).toArray();
-
     let session = await getServerSession(Nextauth)
+    let userInfo = JSON.parse(JSON.stringify(session))
+
+    let db = (await connectDB).db('thread')
+    let q = { email: userInfo.user.email }
+    let o = { projection: { following: 1 } }
+    let followingList = await db.collection('users').findOne(q, o);
+
+    let arr: { userEmail: any; }[] = []
+    followingList?.following.map((a: any) => {
+        arr.push({ userEmail: a })
+    })
+    let q2 = { $or: arr }
+    let result = await db.collection('sentence').find(q2).sort({ _id: -1 }).toArray();
 
     return (
         <>

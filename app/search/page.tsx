@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import Navbar from "../component/navbar";
 
 import { notFound } from "next/navigation"
+import SearchBox from "./searchBox";
 
 export default async function Search() {
     let session = await getServerSession()
@@ -11,9 +12,7 @@ export default async function Search() {
         session
             ? <>
                 <Navbar user={JSON.stringify(session)}></Navbar>
-                <div>
-                    search
-                </div>
+                <SearchBox></SearchBox>
             </>
             : notFound()
     )

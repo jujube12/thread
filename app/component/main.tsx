@@ -15,11 +15,15 @@ export default async function Main() {
     let followingList = await db.collection('users').findOne(q, o);
 
     let arr: { userEmail: any; }[] = []
-    followingList?.following.map((a: any) => {
-        arr.push({ userEmail: a })
-    })
-    let q2 = { $or: arr }
-    let result = await db.collection('sentence').find(q2).sort({ _id: -1 }).toArray();
+    let q2
+    let result
+    if (followingList?.following != undefined) {
+        followingList?.following.map((a: any) => {
+            arr.push({ userEmail: a })
+        })
+        q2 = { $or: arr }
+        result = await db.collection('sentence').find(q2).sort({ _id: -1 }).toArray();
+    }
 
     return (
         <>
@@ -27,11 +31,15 @@ export default async function Main() {
             <div className="h-full overflow-y-scroll">
                 <div className="mb-16">
                     {
-                        result.map((a, i) => {
-                            return (
-                                <SentenceBox key={i} sentence={JSON.stringify(a)}></SentenceBox>
-                            )
-                        })
+                        result
+                            ? result.map((a, i) => {
+                                return (
+                                    <SentenceBox key={i} sentence={JSON.stringify(a)}></SentenceBox>
+                                )
+                            })
+                            : <div>
+
+                            </div>
                     }
                 </div>
             </div>

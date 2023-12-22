@@ -10,7 +10,6 @@ export default async function Handler(req: NextApiRequest, res: NextApiResponse)
             } else {
                 const hash = await bcrypt.hash(req.body.password, 10);
                 req.body.password = hash;
-
                 let db = (await connectDB).db('thread')
                 await db.collection('users').insertOne(req.body)
 

@@ -7,7 +7,7 @@ import MySenteceBox from "./mySentenceBox";
 import LogoutBtn from "@/app/component/logoutBtn";
 import EditProfileBtn from "./editProflieBtn";
 import { Document, ObjectId, WithId } from "mongodb";
-import { sentence } from "@/app/component/sentenceBox";
+import { sentence, sentenceInfo } from "@/app/component/sentenceBox";
 import { notFound } from "next/navigation";
 import FollowBtn from "./followBtn";
 import FollowingList from "./followingList";
@@ -20,7 +20,7 @@ export type comment = {
     comment: string
 }
 export type senAndComInfo = {  //comment 형식
-    sentence: sentence,
+    sentence: sentenceInfo,
     comment: {
         _id: ObjectId,
         sentence: string,
